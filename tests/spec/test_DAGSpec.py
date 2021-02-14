@@ -842,3 +842,7 @@ def test_loads_serializer_and_unserializer(backup_online,
     assert dag['get']._unserializer is unserialize
     assert dag['square']._serializer is serialize
     assert dag['square']._unserializer is unserialize
+
+
+def test_searches_in_default_locations():
+    raise NotImplementedError

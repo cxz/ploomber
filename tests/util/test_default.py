@@ -74,3 +74,15 @@ def test_path_to_env_none(tmp_directory):
     Path('dir').mkdir()
 
     assert default.path_to_env('dir') is None
+
+
+def test_entry_point_in_parent_folder():
+    raise NotImplementedError
+
+
+def test_entry_point_in_src_while_in_sibling_folder():
+    raise NotImplementedError
+
+
+def test_entry_point_returns_relative_path_even_if_not_in_a_parent_folder():
+    raise NotImplementedError
