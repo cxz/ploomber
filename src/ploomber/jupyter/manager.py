@@ -11,7 +11,7 @@ from pathlib import Path
 from jupytext.contentsmanager import TextFileContentsManager
 
 from ploomber.sources.NotebookSource import (_cleanup_rendered_nb, inject_cell)
-from ploomber.spec.DAGSpec import DAGSpec
+from ploomber.spec.dagspec import DAGSpec
 from ploomber.exceptions import DAGSpecInitializationError
 from ploomber.cli import parsers
 from ploomber.jupyter.dag import JupyterDAGManager

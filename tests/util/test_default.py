@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -54,6 +55,24 @@ def test_entry_point():
     assert default.entry_point() == 'pipeline.yaml'
 
 
+def test_entry_point_in_parent_folder(tmp_directory):
+    Path('dir').mkdir()
+    Path('dir', 'pipeline.yaml').touch()
+    os.chdir('dir')
+    assert default.entry_point('dir') == str(Path('..', 'pipeline.yaml'))
+
+
+def test_entry_point_in_src_while_in_sibling_folder(tmp_directory):
+    Path('setup.py').touch()
+    pkg = Path('src', 'package')
+    pkg.mkdir(parents=True)
+    (pkg / 'pipeline.yaml').touch()
+    Path('tests').mkdir()
+    os.chdir('tests')
+    assert default.entry_point() == str(
+        Path('..', 'src', 'package', 'pipeline.yaml'))
+
+
 def test_path_to_env_local(tmp_directory):
     Path('env.yaml').touch()
 
@@ -74,15 +93,3 @@ def test_path_to_env_none(tmp_directory):
     Path('dir').mkdir()
 
     assert default.path_to_env('dir') is None
-
-
-def test_entry_point_in_parent_folder():
-    raise NotImplementedError
-
-
-def test_entry_point_in_src_while_in_sibling_folder():
-    raise NotImplementedError
-
-
-def test_entry_point_returns_relative_path_even_if_not_in_a_parent_folder():
-    raise NotImplementedError

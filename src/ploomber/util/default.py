@@ -20,7 +20,8 @@ def _package_location(root_path):
 
 def entry_point(root_path=None):
     """
-    Determines default entry point, using the following order:
+    Determines default entry point (relative to root_path),
+    using the following order:
 
     1. ENTRY_POINT environment
     2. {root_path}/pipeline.yaml
@@ -34,11 +35,6 @@ def entry_point(root_path=None):
     root_path, optional
         Root path to look for the entry point. Defaults to the current working
         directory
-
-    Returns
-    -------
-    str
-        The path to use as default entry point (relative to root_path)
     """
     root_path = root_path or '.'
     env_var = os.environ.get('ENTRY_POINT')

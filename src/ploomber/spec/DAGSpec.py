@@ -378,13 +378,16 @@ class DAGSpec(MutableMapping):
 
         Returns DAG and the directory where the pipeline.yaml file is located.
         """
-        path = entry_point(root_path=starting_dir or os.getcwd())
+        root_path = starting_dir or os.getcwd()
+        rel_path = entry_point(root_path=root_path)
 
-        if path is None:
+        if rel_path is None:
             if to_dag:
                 return None, None, None
             else:
                 return None, None
+
+        path = Path(root_path, rel_path)
 
         try:
             spec = cls(path, env=env, lazy_import=lazy_import, reload=reload)
