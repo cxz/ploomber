@@ -95,8 +95,9 @@ import pprint
 from ploomber import products, tasks
 from ploomber.dag.DAG import DAG
 from ploomber.placeholders.SourceLoader import SourceLoader
-from ploomber.util.util import (load_dotted_path, find_file_recursively,
-                                call_with_dictionary, add_to_sys_path)
+from ploomber.util.util import (load_dotted_path, call_with_dictionary,
+                                add_to_sys_path)
+from ploomber.util.default import entry_point
 from ploomber.spec.TaskSpec import TaskSpec, suffix2taskclass
 from ploomber.util import validate
 from ploomber.util import default
@@ -377,8 +378,7 @@ class DAGSpec(MutableMapping):
 
         Returns DAG and the directory where the pipeline.yaml file is located.
         """
-        path = find_file_recursively('pipeline.yaml',
-                                     starting_dir=starting_dir or os.getcwd())
+        path = entry_point(root_path=starting_dir or os.getcwd())
 
         if path is None:
             if to_dag:
