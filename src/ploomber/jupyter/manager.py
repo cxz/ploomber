@@ -91,8 +91,8 @@ class PloomberContentsManager(TextFileContentsManager):
                                   and self.spec['meta']['jupyter_hot_reload'])
 
                     (self.spec, self.dag,
-                     self.path) = DAGSpec.auto_load(starting_dir=starting_dir,
-                                                    reload=hot_reload)
+                     self.path) = DAGSpec._auto_load(starting_dir=starting_dir,
+                                                     reload=hot_reload)
             except DAGSpecInitializationError:
                 self.reset_dag()
                 self.log.exception(msg)

@@ -499,7 +499,7 @@ def test_expand_env(save, tmp_directory):
 
 @pytest.mark.parametrize('method, kwargs', [
     [None, dict(data='pipeline.yaml')],
-    ['auto_load', dict(to_dag=False)],
+    ['_auto_load', dict(to_dag=False)],
 ])
 def test_passing_env_in_class_methods(method, kwargs, tmp_directory):
 
@@ -853,7 +853,7 @@ def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
     mock = Mock(wraps=dagspec.entry_point)
     monkeypatch.setattr(dagspec, 'entry_point', mock)
 
-    DAGSpec.auto_load(starting_dir=root_path)
+    DAGSpec._auto_load(starting_dir=root_path)
 
     if root_path is None:
         expected = str(Path(tmp_nbs).resolve())
@@ -861,3 +861,17 @@ def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
         expected = root_path
 
     mock.assert_called_once_with(root_path=expected)
+
+
+def test_find(tmp_nbs, monkeypatch):
+    mock = Mock(return_value=[None, None])
+    monkeypatch.setattr(dagspec.DAGSpec, '_auto_load', mock)
+
+    env = {'a': 1}
+    DAGSpec.find(env=env)
+
+    mock.assert_called_once_with(to_dag=False,
+                                 starting_dir=None,
+                                 env={'a': 1},
+                                 lazy_import=False,
+                                 reload=False)
