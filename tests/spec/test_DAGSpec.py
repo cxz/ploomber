@@ -846,11 +846,9 @@ def test_loads_serializer_and_unserializer(backup_online,
     assert dag['square']._unserializer is unserialize
 
 
-@pytest.mark.parametrize('root_path', [None, 'subdir'])
+@pytest.mark.parametrize('root_path', ['.', 'subdir'])
 def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
-    if root_path is not None:
-        root_path = Path(root_path).resolve()
-
+    root_path = Path(root_path).resolve()
     Path('subdir').mkdir()
 
     mock = Mock(wraps=dagspec.entry_point)
@@ -858,12 +856,7 @@ def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
 
     DAGSpec._auto_load(starting_dir=root_path)
 
-    if root_path is None:
-        expected = str(Path(tmp_nbs).resolve())
-    else:
-        expected = root_path
-
-    mock.assert_called_once_with(root_path=expected)
+    mock.assert_called_once_with(root_path=root_path)
 
 
 def test_find(tmp_nbs, monkeypatch):
