@@ -858,7 +858,7 @@ def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
     if root_path is None:
         expected = str(Path(tmp_nbs).resolve())
     else:
-        expected = root_path
+        expected = Path(root_path).resolve()
 
     mock.assert_called_once_with(root_path=expected)
 
