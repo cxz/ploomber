@@ -57,9 +57,9 @@ def test_entry_point():
 
 def test_entry_point_in_parent_folder(tmp_directory):
     Path('dir').mkdir()
-    Path('dir', 'pipeline.yaml').touch()
+    Path('pipeline.yaml').touch()
     os.chdir('dir')
-    assert default.entry_point('dir') == str(Path('..', 'pipeline.yaml'))
+    assert default.entry_point() == str(Path('..', 'pipeline.yaml'))
 
 
 def test_entry_point_in_src_while_in_sibling_folder(tmp_directory):

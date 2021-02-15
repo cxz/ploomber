@@ -65,4 +65,4 @@ jobs:
       run: |
         eval "$(conda shell.bash hook)"
         conda activate conda-env
-    - uses: mxschmitt/action-tmate@v3
+        pytest

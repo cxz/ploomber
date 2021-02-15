@@ -52,7 +52,8 @@ def entry_point(root_path=None):
                                             starting_dir=root_path)
 
     if parent_location:
-        return relpath(parent_location, start=root_path)
+        return relpath(Path(parent_location).resolve(),
+                       start=Path(root_path).resolve())
 
     root_project = find_root_recursively(starting_dir=root_path)
 
@@ -60,7 +61,8 @@ def entry_point(root_path=None):
         pkg_location = _package_location(root_project)
 
         if pkg_location:
-            return relpath(pkg_location, start=root_path)
+            return relpath(Path(pkg_location).resolve(),
+                           start=Path(root_path).resolve())
 
     return 'pipeline.yaml'
 
