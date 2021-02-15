@@ -65,6 +65,4 @@ jobs:
       run: |
         eval "$(conda shell.bash hook)"
         conda activate conda-env
-        echo "TEMP=$env:USERPROFILE\AppData\Local\Temp" >> $env:GITHUB_ENV
-        pytest
     - uses: mxschmitt/action-tmate@v3
