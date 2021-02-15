@@ -848,6 +848,9 @@ def test_loads_serializer_and_unserializer(backup_online,
 
 @pytest.mark.parametrize('root_path', [None, 'subdir'])
 def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
+    if root_path is not None:
+        root_path = Path(root_path).resolve()
+
     Path('subdir').mkdir()
 
     mock = Mock(wraps=dagspec.entry_point)
@@ -858,7 +861,7 @@ def test_searches_in_default_locations(monkeypatch, tmp_nbs, root_path):
     if root_path is None:
         expected = str(Path(tmp_nbs).resolve())
     else:
-        expected = Path(root_path).resolve()
+        expected = root_path
 
     mock.assert_called_once_with(root_path=expected)
 
